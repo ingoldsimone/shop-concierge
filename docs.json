@@ -1,0 +1,17 @@
+[
+ {"id":"verify-how","title":"How verification works","text":"To unlock member discounts, verify your group once in your account settings. Verification usually takes under two minutes and you can reuse it at every participating store without verifying again."},
+ {"id":"groups","title":"Eligible groups","text":"Discounts are available to military members and veterans, students, teachers, nurses, and first responders. Each store chooses which groups it offers discounts to."},
+ {"id":"student-docs","title":"Student verification","text":"Students verify with a school email address or by uploading a current enrollment document. Graduates can no longer use student discounts."},
+ {"id":"military","title":"Military verification","text":"Active duty, reservists, veterans, and military spouses can verify using their service records. Family members may qualify at stores that include military families."},
+ {"id":"failed","title":"Verification failed","text":"If verification fails, check that your name matches your document exactly and that the document is not expired. You can retry up to three times, then contact support for manual review."},
+ {"id":"promo-codes","title":"Using promo codes","text":"After verifying, click Shop on the store's page and a unique promo code is applied or shown. Codes are single-use for some stores and reusable for others. Codes cannot be shared."},
+ {"id":"stacking","title":"Stacking discounts","text":"Member discounts usually cannot be combined with other coupon codes or clearance pricing. The store's terms on its page list any exceptions."},
+ {"id":"shipping","title":"Shipping","text":"Standard shipping takes 3 to 7 business days. Expedited shipping takes 1 to 3 business days for an extra fee. Shipping policies are set by each store."},
+ {"id":"returns","title":"Returns","text":"Returns are handled by the store you bought from. Most stores accept returns within 30 days of delivery for unused items in original packaging. Discounted items may be final sale at some stores."},
+ {"id":"order-status","title":"Tracking an order or package","text":"Order tracking is in the confirmation email from the store. The concierge cannot see order details, so contact the store directly with your order number."},
+ {"id":"privacy","title":"Privacy","text":"Stores only learn that you belong to an eligible group. They do not receive your documents or personal records. You can delete your account and stored data at any time."},
+ {"id":"account","title":"Account and password","text":"Reset your password from the login page with the reset link. Turn on two-factor authentication in security settings for extra protection."},
+ {"id":"expiry","title":"Discount expiration","text":"Verification stays valid for a set period, typically one year for students and longer for other groups. You will get an email reminder before it expires."},
+ {"id":"support","title":"Contacting support","text":"Support is available by chat and email on weekdays. Response time is usually within one business day."},
+ {"id":"gift-cards","title":"Gift cards","text":"Member discounts do not apply to gift card purchases. Gift cards bought during a promotion follow the issuing store's terms."}
+]

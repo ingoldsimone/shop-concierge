@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Shopping Concierge</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#e9eef2; --surface:#ffffff; --ink:#16212b; --muted:#5b6b78;
+  --line:#cfd8df; --accent:#0b6e5f; --accent-ink:#ffffff; --tint:#dcebe8; --user:#16212b;
+  --font:"Bricolage Grotesque",system-ui,-apple-system,"Segoe UI",sans-serif;
+}
+@media (prefers-color-scheme:dark){
+  :root{--bg:#10171d; --surface:#18222b; --ink:#e8eef2; --muted:#93a4b1;
+        --line:#2b3a46; --accent:#3cc2ab; --accent-ink:#06231e; --tint:#1b3a36; --user:#e8eef2;}
+}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--font);font-size:17px;line-height:1.5}
+.app{max-width:720px;margin:0 auto;height:100%;display:flex;flex-direction:column;padding:0 20px}
+header{display:flex;align-items:baseline;justify-content:space-between;gap:12px;padding:22px 0 14px;border-bottom:1px solid var(--line)}
+h1{font-size:1.35rem;font-weight:700;margin:0;letter-spacing:-.01em}
+#mode{font-size:.85rem;color:var(--muted);border:1px solid var(--line);border-radius:999px;padding:2px 12px}
+#mode.live{color:var(--accent);border-color:var(--accent)}
+main{flex:1;overflow-y:auto;padding:24px 0}
+.empty h2{font-size:clamp(1.8rem,5vw,2.6rem);line-height:1.1;font-weight:700;letter-spacing:-.025em;margin:8px 0 10px;max-width:16ch}
+.empty p{color:var(--muted);margin:0 0 22px;max-width:46ch}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{font:inherit;font-size:.95rem;background:var(--surface);color:var(--ink);border:1px solid var(--line);border-radius:999px;padding:7px 14px;cursor:pointer}
+.chip:hover{border-color:var(--accent)}
+.msg{margin:0 0 20px;max-width:100%}
+.msg.user{display:flex;justify-content:flex-end}
+.msg.user .bubble{background:var(--user);color:var(--bg);border-radius:18px 18px 4px 18px;padding:9px 15px;max-width:85%}
+.msg.bot .bubble{background:var(--surface);border:1px solid var(--line);border-radius:4px 18px 18px 18px;padding:12px 16px}
+.msg.bot.error .bubble{border-color:#c0392b}
+.bubble{white-space:pre-wrap;overflow-wrap:anywhere}
+details{margin-top:10px;font-size:.88rem;color:var(--muted)}
+summary{cursor:pointer;width:fit-content}
+.trace{margin-top:8px;padding-left:12px;border-left:3px solid var(--tint)}
+.trace p{margin:4px 0}
+.src{display:inline-block;background:var(--tint);color:var(--ink);border-radius:6px;padding:1px 8px;margin:2px 4px 2px 0;font-size:.82rem}
+pre{margin:6px 0 0;padding:10px;background:var(--bg);border-radius:8px;overflow-x:auto;font-size:.8rem;color:var(--ink)}
+form{display:flex;gap:10px;padding:14px 0 20px;border-top:1px solid var(--line)}
+input{flex:1;font:inherit;color:var(--ink);background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px 14px;min-width:0}
+button.send{font:inherit;font-weight:500;background:var(--accent);color:var(--accent-ink);border:0;border-radius:12px;padding:0 20px;cursor:pointer}
+button:disabled{opacity:.5;cursor:wait}
+:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.dots span{animation:b 1.2s infinite;display:inline-block}
+.dots span:nth-child(2){animation-delay:.15s}.dots span:nth-child(3){animation-delay:.3s}
+@keyframes b{0%,60%,100%{opacity:.25}30%{opacity:1}}
+@media (prefers-reduced-motion:reduce){.dots span{animation:none}}
+</style>
+</head>
+<body>
+<div class="app">
+  <header>
+    <h1>Shopping Concierge</h1>
+    <span id="mode">checking…</span>
+  </header>
+
+  <main id="log" aria-live="polite">
+    <div class="empty" id="empty">
+      <h2>Ask about member discounts</h2>
+      <p>Answers come from a small help center. Each reply shows which documents were retrieved and whether a tool was called.</p>
+      <div class="chips" id="chips"></div>
+    </div>
+  </main>
+
+  <form id="form">
+    <label for="q" hidden>Your question</label>
+    <input id="q" autocomplete="off" placeholder="How do I verify as a student?" required>
+    <button class="send" id="send" type="submit">Ask</button>
+  </form>
+</div>
+
+<script>
+const SAMPLES = [
+  "How do I verify as a student?",
+  "What discount does Nimbus Outdoors give?",
+  "Can I stack two coupon codes?",
+  "Can I return a discounted item?",
+  "What's the weather in Paris?"
+];
+const log = document.getElementById('log'), form = document.getElementById('form'),
+      input = document.getElementById('q'), send = document.getElementById('send'),
+      empty = document.getElementById('empty');
+
+SAMPLES.forEach(s => {
+  const b = document.createElement('button');
+  b.type = 'button'; b.className = 'chip'; b.textContent = s;
+  b.onclick = () => ask(s);
+  document.getElementById('chips').appendChild(b);
+});
+
+fetch('/health').then(r => r.json()).then(h => {
+  const m = document.getElementById('mode');
+  m.textContent = h.mode === 'openai' ? 'OpenAI mode' : 'Demo mode (offline)';
+  if (h.mode === 'openai') m.classList.add('live');
+}).catch(() => { document.getElementById('mode').textContent = 'server unreachable'; });
+
+function add(role, text) {
+  const wrap = document.createElement('div');
+  wrap.className = 'msg ' + role;
+  const bubble = document.createElement('div');
+  bubble.className = 'bubble'; bubble.textContent = text;
+  wrap.appendChild(bubble); log.appendChild(wrap);
+  log.scrollTop = log.scrollHeight;
+  return wrap;
+}
+
+function addTrace(wrap, d) {
+  const det = document.createElement('details'); det.open = true;
+  const sum = document.createElement('summary'); sum.textContent = 'How this was answered';
+  const t = document.createElement('div'); t.className = 'trace';
+  const p = document.createElement('p'); p.append('Retrieved: ');
+  d.sources.forEach(id => { const s = document.createElement('span'); s.className = 'src'; s.textContent = id; p.appendChild(s); });
+  t.appendChild(p);
+  d.tools_used.forEach(tool => {
+    const tp = document.createElement('p'); tp.textContent = 'Tool called: ' + tool.name;
+    const pre = document.createElement('pre'); pre.textContent = JSON.stringify(tool.result, null, 2);
+    t.append(tp, pre);
+  });
+  det.append(sum, t); wrap.appendChild(det);
+}
+
+async function ask(q) {
+  if (empty) empty.remove();
+  add('user', q);
+  const pending = add('bot', '');
+  pending.firstChild.innerHTML = '<span class="dots"><span>●</span><span>●</span><span>●</span></span>';
+  send.disabled = input.disabled = true;
+  try {
+    const r = await fetch('/ask', {method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({question: q})});
+    if (!r.ok) throw new Error('HTTP ' + r.status);
+    const d = await r.json();
+    pending.firstChild.textContent = d.answer;
+    addTrace(pending, d);
+  } catch (e) {
+    pending.classList.add('error');
+    pending.firstChild.textContent = "Couldn't get an answer (" + e.message + "). Check that the server is running and try again.";
+  } finally {
+    send.disabled = input.disabled = false; input.focus();
+    log.scrollTop = log.scrollHeight;
+  }
+}
+
+form.addEventListener('submit', e => { e.preventDefault(); const q = input.value.trim(); if (q) { input.value = ''; ask(q); } });
+</script>
+</body>
+</html>
