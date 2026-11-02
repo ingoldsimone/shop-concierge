@@ -16,8 +16,8 @@ The response includes a `mode` field so you always know which path ran.
 ```bash
 python -m venv .venv && source .venv/bin/activate
 pip install -r requirements.txt
-# optional: export OPENAI_API_KEY=sk-...
-uvicorn app:app --reload
+# optional: add a key for OpenAI mode (copy .env.example to .env and fill it in)
+python -m uvicorn app:app --reload
 ```
 
 ```bash
@@ -36,7 +36,7 @@ Open `http://localhost:8000` for the chat demo page (it shows the retrieved docu
 1. **Embed once:** the ~15 documents in `docs.json` are embedded at startup and kept in memory as a matrix of unit vectors. No vector database is needed at this scale.
 2. **Retrieve:** the question is embedded and scored against every document with cosine similarity (a single matrix-vector product). The top 3 are returned.
 3. **Generate:** in `openai` mode the retrieved passages go into a prompt that restricts the model to the given context and tells it to say "I don't know" otherwise.
-4. **Tool-calling:** the model can call `get_discount(store)` to look up structured data instead of guessing. The loop handles multiple tool rounds.
+4. **Tool-calling:** the model can call `get_discount(store)` or `find_stores(group)` to look up structured data instead of guessing, and it chooses which tool fits the question. The loop handles multiple tool rounds.
 
 ## Evaluation
 

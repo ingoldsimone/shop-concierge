@@ -7,13 +7,12 @@ import json
 import os
 
 import numpy as np
+from dotenv import load_dotenv
 from fastapi import FastAPI
 from fastapi.responses import FileResponse
 from pydantic import BaseModel
-from dotenv import load_dotenv
 
-
-load_dotenv()  # reads .env into environment variables
+load_dotenv()  # reads .env into environment variables (optional)
 
 DOCS = json.load(open(os.path.join(os.path.dirname(__file__), "docs.json")))
 TEXTS = [f"{d['title']}. {d['text']}" for d in DOCS]
@@ -34,18 +33,42 @@ def get_discount(store: str) -> dict:
     return {"store": store, **info} if info else {"store": store, "error": "store not found"}
 
 
-TOOLS = [{
-    "type": "function",
-    "function": {
-        "name": "get_discount",
-        "description": "Look up the member discount and eligible groups for a store.",
-        "parameters": {
-            "type": "object",
-            "properties": {"store": {"type": "string"}},
-            "required": ["store"],
+def find_stores(group: str) -> dict:
+    g = group.strip().lower()
+    return {
+        "group": group,
+        "stores": [n.title() for n, i in STORES.items() if any(g in x or x in g for x in i["groups"])],
+    }
+
+
+TOOL_FUNCS = {"get_discount": get_discount, "find_stores": find_stores}
+
+TOOLS = [
+    {
+        "type": "function",
+        "function": {
+            "name": "get_discount",
+            "description": "Look up the member discount and eligible groups for a store.",
+            "parameters": {
+                "type": "object",
+                "properties": {"store": {"type": "string"}},
+                "required": ["store"],
+            },
         },
     },
-}]
+    {
+        "type": "function",
+        "function": {
+            "name": "find_stores",
+            "description": "List stores that offer discounts to a group (e.g. nurses, students).",
+            "parameters": {
+                "type": "object",
+                "properties": {"group": {"type": "string"}},
+                "required": ["group"],
+            },
+        },
+    },
+]
 
 # ---- Embeddings: pick a backend, then retrieval is the same either way ----
 if USE_OPENAI:
@@ -83,8 +106,9 @@ def retrieve(question: str, k: int = TOP_K):
 # ---- Answering ----
 SYSTEM = (
     "You are a shopping concierge. Answer ONLY using the provided context or the "
-    "get_discount tool. If the answer is not there, say you don't know and suggest "
-    "contacting support. Be brief."
+    "tools (get_discount, find_stores). Do not add claims, guarantees, or details "
+    "that are not in the context. If the answer is not there, say you don't know "
+    "and suggest contacting support. Be brief."
 )
 
 
@@ -103,7 +127,7 @@ def answer_openai(question, hits):
             return msg.content, tools_used
         messages.append(msg)
         for call in msg.tool_calls:
-            result = get_discount(**json.loads(call.function.arguments))
+            result = TOOL_FUNCS[call.function.name](**json.loads(call.function.arguments))
             tools_used.append({"name": call.function.name, "result": result})
             messages.append(
                 {"role": "tool", "tool_call_id": call.id, "content": json.dumps(result)}
