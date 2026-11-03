@@ -2,7 +2,7 @@
 
 A small RAG question-answering API with LLM tool-calling, built with FastAPI. It answers member questions (verification, discounts, shipping, returns) using a small knowledge base and can look up store discounts through a tool.
 
-![Demo page](docs/sample_screen.png)
+![Demo page](imgs/sample_screen.png)
 
 **Live demo (recorded):** https://ingoldsimone.github.io/shop-concierge/ replays saved answers from a real OpenAI run, with the retrieved documents and tool calls shown for each. It is not live, so for your own questions run the app locally (below).
 
