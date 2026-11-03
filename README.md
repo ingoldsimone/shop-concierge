@@ -2,7 +2,7 @@
 
 A small RAG question-answering API with LLM tool-calling, built with FastAPI. It answers member questions (verification, discounts, shipping, returns) using a small knowledge base and can look up store discounts through a tool.
 
-![Demo page](docs/screenshot.png)
+![Demo page](docs/sample_screen.png)
 
 **Works with or without an API key.**
 
