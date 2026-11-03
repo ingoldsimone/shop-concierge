@@ -2,7 +2,7 @@
 
 ### How do I verify as a student?
 
-To verify as a student, you need to use a school email address or upload a current enrollment document. Verification typically takes under two minutes and can be reused at every participating store.
+To verify as a student, you can either use a school email address or upload a current enrollment document in your account settings. Verification usually takes under two minutes.
 
 - Retrieved: student-docs, verify-how, expiry
 
@@ -14,25 +14,25 @@ If your verification failed, check that your name matches your document exactly 
 
 ### Can I use two coupon codes on one order?
 
-Member discounts usually cannot be combined with other coupon codes. You should check the store's terms on its page for any exceptions.
+Member discounts usually cannot be combined with other coupon codes or clearance pricing. You should check the store's terms on its page for any exceptions.
 
 - Retrieved: promo-codes, stacking, gift-cards
 
 ### Where's my parcel?
 
-I don't know. Please check the confirmation email from the store for order tracking details, or contact the store directly with your order number.
+I don't know. You should check the order tracking in the confirmation email from the store or contact the store directly with your order number.
 
 - Retrieved: order-status, shipping, returns
 
 ### Is it safe? Will shops see my personal info?
 
-Yes, it is safe. Stores only learn that you belong to an eligible group and do not receive your personal documents or records.
+I don't know. You can contact support for more information on privacy and safety.
 
 - Retrieved: privacy, verify-how, promo-codes
 
 ### Can my spouse use my military discount?
 
-Yes, military spouses can verify using service records and may be eligible for discounts.
+Yes, military spouses can verify using their service records to qualify for discounts.
 
 - Retrieved: military, groups, gift-cards
 
@@ -52,12 +52,12 @@ Brightside Shoes has discounts for nurses.
 
 ### What's the weather in Paris?
 
-I don't know. Please contact support for information regarding the weather.
+I can only help with member discounts and shopping.
 
 - Retrieved: support, shipping, returns
 
 ### Write me a poem about cats
 
-I don't know. Please contact support for assistance.
+I can only help with member discounts and shopping.
 
 - Retrieved: failed, support, promo-codes

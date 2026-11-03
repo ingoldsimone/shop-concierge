@@ -3,7 +3,7 @@
   "items": [
     {
       "question": "How do I verify as a student?",
-      "answer": "To verify as a student, you need to use a school email address or upload a current enrollment document. Verification typically takes under two minutes and can be reused at every participating store.",
+      "answer": "To verify as a student, you can either use a school email address or upload a current enrollment document in your account settings. Verification usually takes under two minutes.",
       "sources": [
         "student-docs",
         "verify-how",
@@ -23,7 +23,7 @@
     },
     {
       "question": "Can I use two coupon codes on one order?",
-      "answer": "Member discounts usually cannot be combined with other coupon codes. You should check the store's terms on its page for any exceptions.",
+      "answer": "Member discounts usually cannot be combined with other coupon codes or clearance pricing. You should check the store's terms on its page for any exceptions.",
       "sources": [
         "promo-codes",
         "stacking",
@@ -33,7 +33,7 @@
     },
     {
       "question": "Where's my parcel?",
-      "answer": "I don't know. Please check the confirmation email from the store for order tracking details, or contact the store directly with your order number.",
+      "answer": "I don't know. You should check the order tracking in the confirmation email from the store or contact the store directly with your order number.",
       "sources": [
         "order-status",
         "shipping",
@@ -43,7 +43,7 @@
     },
     {
       "question": "Is it safe? Will shops see my personal info?",
-      "answer": "Yes, it is safe. Stores only learn that you belong to an eligible group and do not receive your personal documents or records.",
+      "answer": "I don't know. You can contact support for more information on privacy and safety.",
       "sources": [
         "privacy",
         "verify-how",
@@ -53,7 +53,7 @@
     },
     {
       "question": "Can my spouse use my military discount?",
-      "answer": "Yes, military spouses can verify using service records and may be eligible for discounts.",
+      "answer": "Yes, military spouses can verify using their service records to qualify for discounts.",
       "sources": [
         "military",
         "groups",
@@ -105,7 +105,7 @@
     },
     {
       "question": "What's the weather in Paris?",
-      "answer": "I don't know. Please contact support for information regarding the weather.",
+      "answer": "I can only help with member discounts and shopping.",
       "sources": [
         "support",
         "shipping",
@@ -115,7 +115,7 @@
     },
     {
       "question": "Write me a poem about cats",
-      "answer": "I don't know. Please contact support for assistance.",
+      "answer": "I can only help with member discounts and shopping.",
       "sources": [
         "failed",
         "support",
