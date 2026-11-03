@@ -1,0 +1,127 @@
+{
+  "mode": "openai",
+  "items": [
+    {
+      "question": "How do I verify as a student?",
+      "answer": "To verify as a student, you need to use a school email address or upload a current enrollment document. Verification typically takes under two minutes and can be reused at every participating store.",
+      "sources": [
+        "student-docs",
+        "verify-how",
+        "expiry"
+      ],
+      "tools_used": []
+    },
+    {
+      "question": "My verification failed, what now?",
+      "answer": "If your verification failed, check that your name matches your document exactly and that the document is not expired. You can retry up to three times, then contact support for manual review.",
+      "sources": [
+        "failed",
+        "student-docs",
+        "verify-how"
+      ],
+      "tools_used": []
+    },
+    {
+      "question": "Can I use two coupon codes on one order?",
+      "answer": "Member discounts usually cannot be combined with other coupon codes. You should check the store's terms on its page for any exceptions.",
+      "sources": [
+        "promo-codes",
+        "stacking",
+        "gift-cards"
+      ],
+      "tools_used": []
+    },
+    {
+      "question": "Where's my parcel?",
+      "answer": "I don't know. Please check the confirmation email from the store for order tracking details, or contact the store directly with your order number.",
+      "sources": [
+        "order-status",
+        "shipping",
+        "returns"
+      ],
+      "tools_used": []
+    },
+    {
+      "question": "Is it safe? Will shops see my personal info?",
+      "answer": "Yes, it is safe. Stores only learn that you belong to an eligible group and do not receive your personal documents or records.",
+      "sources": [
+        "privacy",
+        "verify-how",
+        "promo-codes"
+      ],
+      "tools_used": []
+    },
+    {
+      "question": "Can my spouse use my military discount?",
+      "answer": "Yes, military spouses can verify using service records and may be eligible for discounts.",
+      "sources": [
+        "military",
+        "groups",
+        "gift-cards"
+      ],
+      "tools_used": []
+    },
+    {
+      "question": "What discount does Nimbus Outdoors give?",
+      "answer": "Nimbus Outdoors offers a 20% discount for military members and students.",
+      "sources": [
+        "stacking",
+        "groups",
+        "gift-cards"
+      ],
+      "tools_used": [
+        {
+          "name": "get_discount",
+          "result": {
+            "store": "Nimbus Outdoors",
+            "discount": "20%",
+            "groups": [
+              "military",
+              "students"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "question": "Which store has discounts for nurses?",
+      "answer": "Brightside Shoes has discounts for nurses.",
+      "sources": [
+        "groups",
+        "stacking",
+        "gift-cards"
+      ],
+      "tools_used": [
+        {
+          "name": "find_stores",
+          "result": {
+            "group": "nurses",
+            "stores": [
+              "Brightside Shoes"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "question": "What's the weather in Paris?",
+      "answer": "I don't know. Please contact support for information regarding the weather.",
+      "sources": [
+        "support",
+        "shipping",
+        "returns"
+      ],
+      "tools_used": []
+    },
+    {
+      "question": "Write me a poem about cats",
+      "answer": "I don't know. Please contact support for assistance.",
+      "sources": [
+        "failed",
+        "support",
+        "promo-codes"
+      ],
+      "tools_used": []
+    }
+  ]
+}

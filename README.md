@@ -4,6 +4,8 @@ A small RAG question-answering API with LLM tool-calling, built with FastAPI. It
 
 ![Demo page](docs/sample_screen.png)
 
+**Live demo (recorded):** https://ingoldsimone.github.io/shop-concierge/ replays saved answers from a real OpenAI run, with the retrieved documents and tool calls shown for each. It is not live, so for your own questions run the app locally (below).
+
 **Works with or without an API key.**
 
 | Mode | When | Retrieval | Answering |
@@ -48,7 +50,7 @@ Known limitation: demo mode uses keyword matching, so paraphrases with no word o
 
 ## Sample responses
 
-`samples_demo.md` and `samples_openai.md` hold recorded answers to the same 10 questions in each mode, including paraphrases and out-of-scope questions. Regenerate them with `python record_samples.py` (set `OPENAI_API_KEY` for the OpenAI version).
+`samples_demo.md` and `samples_openai.md` hold recorded answers to the same 10 questions in each mode, including paraphrases and out-of-scope questions. Regenerate them with `python record_samples.py` (set `OPENAI_API_KEY` for the OpenAI version, which also writes `docs/answers.json` for the hosted demo).
 
 ## Project structure
 
@@ -56,7 +58,8 @@ Known limitation: demo mode uses keyword matching, so paraphrases with no word o
 |------|---------|
 | `app.py` | FastAPI app: retrieval, tools, both answering modes |
 | `docs.json` | The small knowledge base (fictional help-center articles) |
-| `static/index.html` | One-page demo UI |
+| `static/index.html` | One-page demo UI. Runs live against the API, or replays `docs/answers.json` when there is no server |
+| `docs/` | GitHub Pages site: a copy of `index.html` plus the recorded `answers.json` |
 | `eval.py` | 12-question check for retrieval, tool use, and refusals |
 | `record_samples.py` | Saves answers to `samples_<mode>.md` |
 
