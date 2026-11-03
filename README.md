@@ -2,6 +2,8 @@
 
 A small RAG question-answering API with LLM tool-calling, built with FastAPI. It answers member questions (verification, discounts, shipping, returns) using a small knowledge base and can look up store discounts through a tool.
 
+![Demo page](docs/screenshot.png)
+
 **Works with or without an API key.**
 
 | Mode | When | Retrieval | Answering |
@@ -47,6 +49,16 @@ Known limitation: demo mode uses keyword matching, so paraphrases with no word o
 ## Sample responses
 
 `samples_demo.md` and `samples_openai.md` hold recorded answers to the same 10 questions in each mode, including paraphrases and out-of-scope questions. Regenerate them with `python record_samples.py` (set `OPENAI_API_KEY` for the OpenAI version).
+
+## Project structure
+
+| File | Purpose |
+|------|---------|
+| `app.py` | FastAPI app: retrieval, tools, both answering modes |
+| `docs.json` | The small knowledge base (fictional help-center articles) |
+| `static/index.html` | One-page demo UI |
+| `eval.py` | 12-question check for retrieval, tool use, and refusals |
+| `record_samples.py` | Saves answers to `samples_<mode>.md` |
 
 ## Design notes
 
